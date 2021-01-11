@@ -7,41 +7,27 @@ on:
 
 jobs:
   Linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install deps
-      run: sudo apt install autoconf automake bison flex gcc-9 libncurses-dev make subversion texinfo wget libusb-dev
-      
-    - name: Bootstrap
+    - name: Checkout the latest PSP toolchain
       run: |
         cd $GITHUB_WORKSPACE
-        ./bootstrap.sh
-
-    - name: Clean
-      run: |
-        cd $GITHUB_WORKSPACE
-        ./clean.sh
-
-    - name: Build
-      run: |
-        cd $GITHUB_WORKSPACE
-        ./build.sh
-
-  macOS:
-    runs-on: macos-10.15
-    steps:
-    - uses: actions/checkout@v2
+        git clone https://github.com/pspdev/psptoolchain.git psptc
 
     - name: Install deps
       run: |
-        brew install autoconf automake flex gcc@9 ncurses make subversion texinfo wget libusb libusb-compat sdl
-      
+        cd $GITHUB_WORKSPACE/psptc
+        ./prepare-debian-ubuntu.sh
+
     - name: Bootstrap
       run: |
         cd $GITHUB_WORKSPACE
-        ./bootstrap.sh
+        export PSPDEV=$(pwd)/pspdev
+        export PATH=$PATH:$PSPDEV/bin
+        cd psptc
+        ./toolchain.sh
 
     - name: Clean
       run: |
