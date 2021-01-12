@@ -11,22 +11,31 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Checkout the latest PSP toolchain
+    - name: Checkout the latest PSP toolchain script
       run: |
         cd $GITHUB_WORKSPACE
-        git clone https://github.com/pspdev/psptoolchain.git psptc
+        git clone https://github.com/pspdev/psptoolchain.git
+
+    - name: Cache PSP toolchain
+      uses: actions/cache@v2
+      id: cache-psptoolchain
+      with:
+        path: pspdev
+        key: ${{ runner.os }}-psptoolchain-$(cat psptoolchain/.git/refs/heads/master)
 
     - name: Install deps
+      if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
       run: |
-        cd $GITHUB_WORKSPACE/psptc
+        cd $GITHUB_WORKSPACE/psptoolchain
         ./prepare-debian-ubuntu.sh
 
     - name: Bootstrap
+      if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
       run: |
         cd $GITHUB_WORKSPACE
         export PSPDEV=$(pwd)/pspdev
         export PATH=$PATH:$PSPDEV/bin
-        cd psptc
+        cd psptoolchain
         ./toolchain.sh
 
     - name: Clean
