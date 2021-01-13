@@ -80,7 +80,7 @@ jobs:
     - name: Checkout the latest PSP toolchain script
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/pspdev/psptoolchain.git
+        repository: pspdev/psptoolchain
         path: psptoolchain
 
     - name: Retrieve commit hash
