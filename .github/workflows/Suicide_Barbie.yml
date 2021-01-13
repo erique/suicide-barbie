@@ -16,20 +16,18 @@ jobs:
         cd $GITHUB_WORKSPACE
         git clone https://github.com/pspdev/psptoolchain.git
 
-    - name: Get latest SHA
-      id: latest
-      # add a step output `steps.build_id.outputs.id` as the unique id
-      run: echo "::set-output name=sha::$(cat psptoolchain/.git/refs/heads/master)"
+    - name: Retrieve commit hash
+      id: psptoolchain
+      run: echo "::set-output name=sha::$(git -C psptoolchain rev-parse HEAD)"
         
     - name: Cache PSP toolchain
       uses: actions/cache@v2
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.latest.outputs.sha }}
+        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
-      if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
       run: |
         cd $GITHUB_WORKSPACE/psptoolchain
         ./prepare-debian-ubuntu.sh
