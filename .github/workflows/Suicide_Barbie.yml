@@ -25,19 +25,18 @@ jobs:
         key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
+      if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
       run: sudo apt install autoconf automake bison flex gcc-9 libncurses-dev make subversion texinfo wget libusb-dev
       
     - name: Bootstrap
-      run: |
-        ./bootstrap.sh
+      if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
+      run: ./bootstrap.sh
 
     - name: Clean
-      run: |
-        ./clean.sh
+      run: ./clean.sh
 
     - name: Build
-      run: |
-        ./build.sh
+      run: ./build.sh
 
   macOS:
     runs-on: macos-10.15
@@ -72,14 +71,17 @@ jobs:
       run: ./build.sh
         
 
-  Linux-latest:
+  Linux-latest-pspdev:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout the main repo
+      uses: actions/checkout@v2
 
     - name: Checkout the latest PSP toolchain script
-      run: |
-        git clone https://github.com/pspdev/psptoolchain.git
+      uses: actions/checkout@v2
+      with:
+        repository: https://github.com/pspdev/psptoolchain.git
+        path: psptoolchain
 
     - name: Retrieve commit hash
       id: psptoolchain
@@ -94,8 +96,7 @@ jobs:
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
-      run: |
-        ./prepare-debian-ubuntu.sh
+      run: ./prepare-debian-ubuntu.sh
 
     - name: Bootstrap
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -106,9 +107,7 @@ jobs:
         ./toolchain.sh
 
     - name: Clean
-      run: |
-        ./clean.sh
+      run: ./clean.sh
 
     - name: Build
-      run: |
-        ./build.sh
+      run: ./build.sh
