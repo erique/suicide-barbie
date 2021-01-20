@@ -123,8 +123,10 @@ jobs:
       run: |
         cd Data\DemoTest
         goPsp.bat
+      shell: cmd
 
     - name: Build Data (DX9)
       run: |
         cd Data\DemoTest
-        goPsp.bat
+        goDx9.bat
+      shell: cmd
