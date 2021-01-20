@@ -1,3 +1,6 @@
 pspdev
 Build
 Output
+Data/DemoTest/**/psp
+Data/DemoTest/**/dx9
+*.fbx.out

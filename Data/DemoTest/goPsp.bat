@@ -35,3 +35,5 @@
 @call buildScenePsp.bat suicidebarbie1
 @call buildScenePsp.bat suicidebarbie2
 @call buildScenePsp.bat window
+
+@exit /b 0
