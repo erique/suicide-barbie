@@ -123,10 +123,8 @@ jobs:
       run: goPsp.bat
       shell: cmd
       working-directory: Data\DemoTest
-      continue-on-error: true
 
     - name: Build Data (DX9)
       run: goDx9.bat
       shell: cmd
       working-directory: Data\DemoTest
-      continue-on-error: true
