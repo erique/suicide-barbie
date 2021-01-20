@@ -22,7 +22,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -54,7 +55,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -92,7 +94,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -113,3 +116,18 @@ jobs:
 
     - name: Build
       run: ./build.sh
+      
+  Data:
+    runs-on: windows-2016
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Data (PSP)
+      run: goPsp.bat
+      shell: cmd
+      working-directory: Data\DemoTest
+
+    - name: Build Data (DX9)
+      run: goDx9.bat
+      shell: cmd
+      working-directory: Data\DemoTest
