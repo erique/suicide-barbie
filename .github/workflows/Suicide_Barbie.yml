@@ -22,7 +22,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -54,7 +55,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
@@ -92,7 +94,8 @@ jobs:
       id: cache-psptoolchain
       with:
         path: pspdev
-        key: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        key:          ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
+        restore-keys: ${{ runner.os }}-psptoolchain-${{ steps.psptoolchain.outputs.sha }}
 
     - name: Install deps
       if: steps.cache-psptoolchain.outputs.cache-hit != 'true'
