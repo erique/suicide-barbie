@@ -120,13 +120,13 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build Data (PSP)
-      run: |
-        cd Data\DemoTest
-        goPsp.bat
+      run: goPsp.bat
       shell: cmd
+      working-directory: Data\DemoTest
+      continue-on-error: true
 
     - name: Build Data (DX9)
-      run: |
-        cd Data\DemoTest
-        goDx9.bat
+      run: goDx9.bat
       shell: cmd
+      working-directory: Data\DemoTest
+      continue-on-error: true
