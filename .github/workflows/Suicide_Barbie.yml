@@ -113,3 +113,18 @@ jobs:
 
     - name: Build
       run: ./build.sh
+      
+  Data:
+    runs-on: windows-2016
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Data (PSP)
+      run: |
+        cd Data\DemoTest
+        goPsp.bat
+
+    - name: Build Data (DX9)
+      run: |
+        cd Data\DemoTest
+        goPsp.bat
